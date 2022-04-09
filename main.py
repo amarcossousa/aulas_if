@@ -1,1 +1,2 @@
-from fastapi import *
+import imp
+from fastapi import FastAPI
