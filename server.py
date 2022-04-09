@@ -3,5 +3,10 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get('/')
-async def root():
+def home():
     return {"mensagem": 'Olá FastAPI - TDS 2022'}
+
+
+@app.get('/profile')
+def profile():
+    return {"nome": 'Marcos Sousa'}
