@@ -26,4 +26,4 @@ def listar_animais():
 def criar_animal(animal: Animal):
     animal.id = uuid4()
     banco.append(animal)
-    return None
+    return {'mensagem:' 'Confirmado'}
