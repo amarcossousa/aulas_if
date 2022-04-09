@@ -16,14 +16,39 @@ class Animal(BaseModel):
 
 banco: List [Animal] = []
 
+
 @app.get('/animais')
 def listar_animais():
     return banco
 
 
+@app.get('/animais/{animal_id}')
+def obter_animal(animal_id: str):
+    for animal in banco:
+        if animal.id == animal_id:
+            return animal
+    return {'erro': 'Animal não localizado'}
+
+
+@app.delete('/animais/{animal_id}')
+def remover_animal(animal_id: str):
+    posicao = -1
+    # buscar a posicao do animal
+    for index, animal in enumerate(banco):
+        if animal.id == animal_id:
+            posicao = index
+            break
+    
+    if posicao != -1:
+        banco.pop(posicao)
+        return {'mensagem': 'Animal removido com sucesso! '}
+
+    else:
+        return {'erro': 'Animal não localizado'}
+
 
 @app.post('/animais')
 def criar_animal(animal: Animal):
-    animal.id = uuid4()
+    animal.id = str(uuid4())
     banco.append(animal)
-    return {'mensagem:' 'Confirmado'}
+    return None
