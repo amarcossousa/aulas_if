@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./app_blx.db" # Define o banco de dados
+SQLALCHEMY_DATABASE_URL = "sqlite:///./app_myflix.db"
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 engine = create_engine(
@@ -12,11 +12,10 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-# Cria o db
+
 def criar_db():
     Base.metadata.create_all(bind=engine)
 
-# Parte para enviar e receber informações do db
 def get_db():
     db = SessionLocal()
     try:

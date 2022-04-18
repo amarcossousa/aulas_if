@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, Boolean
 from src.infra.sqlalchemy.config.database import Base
 
 
+# Classes para criar as tabelas no bd
 class Produto(Base):
     __tablename__ = 'produto'
 

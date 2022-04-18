@@ -5,10 +5,10 @@ from src.infra.sqlalchemy.models import models
 
 class RepositorioProduto():
 
-    def __init__(self, db: Session):
+    def __init__(self, db: Session): # Define a seção no db
         self.db = db
 
-    def criar(self, produto: schemas.Produto):
+    def criar(self, produto: schemas.Produto): # "Efetiva os modelos no bdb"
         db_produto = models.Produto(nome=produto.nome, 
                                     detalhes=produto.detalhes,
                                     preco=produto.preco,
