@@ -17,3 +17,13 @@ def criar_serie(serie: schemas.Series, db: Session = Depends(get_db) ):
 @app.get('/series')
 def listar_serie(db: Session = Depends(get_db)):
     return RepositorioSeries(db).listar()
+
+@app.get('/series/{series_id}')
+def obter_serie(series_id: int, db: Session = Depends(get_db)):
+    serie = RepositorioSeries(db).buscar(series_id)
+    return serie
+
+@app.delete('/series/{series_id}')
+def excluir(series_id: int, db: Session = Depends(get_db)):
+    RepositorioSeries(db).remover(series_id)
+    return {'msg': 'excluir_serie'}
