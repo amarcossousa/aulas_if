@@ -9,7 +9,6 @@ class RepositorioSeries():
 
     def __init__(self, db: Session):
         self.db = db
-
     
     def criar(self, series: schemas.Series): # importado de schemas 
         db_series = models.Series (titulo = series.titulo,
@@ -21,14 +20,10 @@ class RepositorioSeries():
         self.db.refresh(db_series)
         return db_series
         
-
-
     def listar(self):
         series = self.db.query(models.Series).all()
         return series
-
     
-
     def buscar(self, serie_id: int):
         stmt = select(models.Series).filter_by(id = serie_id)
         serie = self.db.execute(stmt).one()
