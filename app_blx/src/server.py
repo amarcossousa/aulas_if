@@ -4,6 +4,7 @@ from src.schema.schemas import Produto, ProdutoSimples
 from sqlalchemy.orm import Session
 from typing import List
 from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
+from src.infra.sqlalchemy.models import models
 
 criar_db()
 
@@ -20,6 +21,6 @@ def listar_produtos(db: Session = Depends(get_db)):
     return produtos
 
 @app.delete('/produto, {produto_id}')
-def excluir_produto():
-    pass
-    
+def remover(produto_id: int, db:Session = Depends(get_db)):
+    RepositorioProduto(db).remover(produto_id)
+    return {'msg': 'Produto excluido com sucesso! '}

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from src.schema import schemas
 from src.infra.sqlalchemy.models import models
+from sqlalchemy import delete 
 
 
 class RepositorioProduto():
@@ -28,6 +29,8 @@ class RepositorioProduto():
     def obter(self):
         pass
 
-    def remover(self):
-        pass
+    def remover(self, produto_id: int):
+            stmt = delete(models.Produto).where(models.Produto.id == produto_id)
+            self.db.execute(stmt)
+            self.db.commit()
 
