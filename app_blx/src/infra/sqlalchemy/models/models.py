@@ -1,3 +1,4 @@
+from typing import Collection
 from sqlalchemy import Column, Integer, String, Float, Boolean
 from src.infra.sqlalchemy.config.database import Base
 
@@ -11,3 +12,4 @@ class Produto(Base):
     detalhes = Column(String)
     preco = Column(Float)
     disponivel = Column(Boolean)
+    tamanhos = Column(String)
