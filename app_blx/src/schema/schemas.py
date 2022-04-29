@@ -6,7 +6,11 @@ from typing import Optional
 class Usuario(BaseModel):
     id: Optional[str] = None
     nome: str
+    senha: str
     telefone: str
+
+    class Config:
+        orm_mode = True
    
 
 class Produto(BaseModel):
