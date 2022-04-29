@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Depends, status
 from src.infra.sqlalchemy.config.database import criar_db, get_db
-from src.schema.schemas import Produto, ProdutoSimples
+from src.schema.schemas import Produto, ProdutoSimples, Usuario
 from sqlalchemy.orm import Session
 from typing import List
 from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
+from src.infra.sqlalchemy.repositorios.repositorio_usuario import RepositorioUsuario
 from src.infra.sqlalchemy.models import models
 
 criar_db()
@@ -24,3 +25,15 @@ def listar_produtos(db: Session = Depends(get_db)):
 def remover(produto_id: int, db:Session = Depends(get_db)):
     RepositorioProduto(db).remover(produto_id)
     return {'msg': 'Produto excluido com sucesso! '}
+
+
+# USUARIOS
+@app.post('/usuarios/', status_code=201, response_model=Usuario)
+def criar_usuarios(usuario: Usuario, session: Session = Depends(get_db)):
+    usuario_criado = RepositorioUsuario(session).criar(usuario)
+    return usuario_criado
+
+@app.get('/usuarios', status_code=202, response_model=List[Usuario])
+def listar_usuario(session: Session = Depends(get_db)):
+    usuarios = RepositorioUsuario(session).listar()
+    return usuarios
