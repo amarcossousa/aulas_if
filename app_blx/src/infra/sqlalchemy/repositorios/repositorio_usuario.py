@@ -1,13 +1,12 @@
-from flask import session
 from sqlalchemy.orm import Session
-from src.infra.sqlalchemy.config.database import get_db
 from src.infra.sqlalchemy.models import models
 from src.schema.schemas import Usuario
+from sqlalchemy import select
 
 class RepositorioUsuario():
     
     def __init__(self, session: Session):
-        self.db = session
+        self.session = session
       
     def criar(self, usuario: Usuario):
         db_usuario = models.Usuario(nome=usuario.nome,
@@ -15,12 +14,14 @@ class RepositorioUsuario():
                                     telefone=usuario.telefone)
         self.session.add(db_usuario)
         self.session.commit()
-        self.session.refresh()
+        self.session.refresh(db_usuario)
         return db_usuario
 
 
     def listar(self):
-        pass
+        stmt = select(models.Usuario)
+        usuarios = self.session.execute(stmt).scalars().all()
+        return usuarios
 
     def obter(self):
         pass
