@@ -17,7 +17,7 @@ def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto)
     return produto_criado
 
-@app.get('/produtos/', status_code=201, response_model=List[ProdutoSimples])
+@app.get('/produtos/', status_code=201)
 def listar_produtos(db: Session = Depends(get_db)):
     produtos = RepositorioProduto(db).listar()
     return produtos
@@ -27,10 +27,6 @@ def remover(produto_id: int, db:Session = Depends(get_db)):
     RepositorioProduto(db).remover(produto_id)
     return {'msg': 'Produto excluido com sucesso! '}
 
-@app.delete('/produtos/{produto_id}')
-def remover_produto(produto_id: int, session: Session = Depends(get_db)):
-    RepositorioProduto(session).remover(produto_id)
-    return {"msg": "Produto excluido com sucesso"}
 
 # USUARIOS
 @app.post('/usuarios/', status_code=201, response_model=Usuario)
