@@ -1,7 +1,7 @@
 from re import S
 from fastapi import FastAPI, Depends, status
 from src.infra.sqlalchemy.config.database import criar_db, get_db
-from src.schema.schemas import Produto, ProdutoSimples, Usuario
+from src.schema.schemas import Produto, ProdutoSimples, Usuario, UsuarioSimples
 from sqlalchemy.orm import Session
 from typing import List
 from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
@@ -34,7 +34,7 @@ def criar_usuarios(usuario: Usuario, session: Session = Depends(get_db)):
     usuario_criado = RepositorioUsuario(session).criar(usuario)
     return usuario_criado
 
-@app.get('/usuarios', status_code=202, response_model=List[Usuario])
+@app.get('/usuarios', status_code=202, response_model=List[UsuarioSimples])
 def listar_usuario(session: Session = Depends(get_db)):
     usuarios = RepositorioUsuario(session).listar()
     return usuarios
