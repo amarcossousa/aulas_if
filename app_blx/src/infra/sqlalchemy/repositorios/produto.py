@@ -22,11 +22,9 @@ class RepositorioProduto():
         return db_produto
 
 
-
     def listar(self):
         produtos = self.db.query(models.Produto).all()
         return produtos
-
 
     def obter(self):
         pass
@@ -35,4 +33,8 @@ class RepositorioProduto():
             stmt = delete(models.Produto).where(models.Produto.id == produto_id)
             self.db.execute(stmt)
             self.db.commit()
+    
+    def update():
+        pass
+
 
