@@ -1,0 +1,3 @@
+
+alert("Teste")
+console.log()
