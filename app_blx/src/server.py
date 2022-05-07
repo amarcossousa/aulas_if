@@ -23,7 +23,7 @@ def listar_produtos(db: Session = Depends(get_db)):
     produtos = RepositorioProduto(db).listar()
     return produtos
 
-@app.delete('/produto/, {produto_id}')
+@app.delete('/produto/{produto_id}')
 def remover(produto_id: int, db:Session = Depends(get_db)):
     RepositorioProduto(db).remover(produto_id)
     return {'msg': 'Produto excluido com sucesso! '}
