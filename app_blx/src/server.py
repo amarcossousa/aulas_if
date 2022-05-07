@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Depends, status
+from flask import session
 from src.infra.sqlalchemy.config.database import criar_db, get_db
 from src.schema.schemas import Produto, ProdutoSimples, Usuario, UsuarioSimples
 from sqlalchemy.orm import Session
 from typing import List
-from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
+from src.infra.sqlalchemy.repositorios.repositorio_produto import RepositorioProduto
 from src.infra.sqlalchemy.repositorios.repositorio_usuario import RepositorioUsuario
 
 
@@ -21,10 +22,15 @@ def listar_produtos(db: Session = Depends(get_db)):
     produtos = RepositorioProduto(db).listar()
     return produtos
 
-@app.delete('/produto, {produto_id}')
+@app.delete('/produto/, {produto_id}')
 def remover(produto_id: int, db:Session = Depends(get_db)):
     RepositorioProduto(db).remover(produto_id)
-    return {'msg': 'Produto excluido com sucesso! '}
+    return {'msg': 'Produto excluido com sucesso! '}, produto_id
+
+@app.put('/produtos/', status_code=status.HTTP_202_ACCEPTED)
+def editar_produto(produto: Produto, session: Session = Depends(get_db)):
+    RepositorioProduto(session).editar(produto)
+    return produto
 
 
 # USUARIOS
