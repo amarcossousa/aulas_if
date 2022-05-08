@@ -1,4 +1,3 @@
-from turtle import st
 from fastapi import APIRouter, Depends, status, HTTPException
 from src.schema.schemas import Produto, ProdutoSimples
 from sqlalchemy.orm import Session
