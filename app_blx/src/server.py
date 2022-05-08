@@ -1,7 +1,7 @@
 from genericpath import exists
 from fastapi import FastAPI, Depends, status
 from src.infra.sqlalchemy.config.database import criar_db, get_db
-from src.schema.schemas import Produto, ProdutoSimples, Usuario
+from src.schema.schemas import Produto, ProdutoSimples, Usuario, UsuarioSimples
 from sqlalchemy.orm import Session
 from typing import List
 from src.infra.sqlalchemy.repositorios.repositorio_produto import RepositorioProduto
@@ -18,7 +18,7 @@ def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto)
     return produto_criado
 
-@app.get('/produtos/', status_code=status.HTTP_202_ACCEPTED, response_model=List[Produto])
+@app.get('/produtos/', status_code=status.HTTP_202_ACCEPTED, response_model=List[ProdutoSimples])
 def listar_produtos(db: Session = Depends(get_db)):
     produtos = RepositorioProduto(db).listar()
     return produtos
@@ -31,7 +31,7 @@ def remover(produto_id: int, db:Session = Depends(get_db)):
 @app.put('/produtos/{id}', status_code=status.HTTP_202_ACCEPTED, response_model=ProdutoSimples)
 def editar_produto(id: int, produto: Produto, session: Session = Depends(get_db)):
     RepositorioProduto(session).editar(id, produto)
-    produto.id = id
+    # produto.id = id # Parte do codigo não faz efeito algum
     return produto
 
 @app.get('/produto/{produto_id}')
@@ -45,7 +45,7 @@ def criar_usuarios(usuario: Usuario, session: Session = Depends(get_db)):
     usuario_criado = RepositorioUsuario(session).criar(usuario)
     return usuario_criado
 
-@app.get('/usuarios', status_code=202, response_model=List[Usuario])
+@app.get('/usuarios/', status_code=202, response_model=List[UsuarioSimples])
 def listar_usuario(session: Session = Depends(get_db)):
     usuarios = RepositorioUsuario(session).listar()
     return usuarios
