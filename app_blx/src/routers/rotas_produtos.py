@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, HTTPException
 from src.schema.schemas import Produto, ProdutoSimples, Usuario, UsuarioSimples
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.config.database import get_db
@@ -32,7 +32,9 @@ def editar_produto(id: int, produto: Produto, session: Session = Depends(get_db)
     # produto.id = id # Parte do codigo não faz efeito algum
     return produto
 
-@router.get('/produto/{produto_id}')
-def obter_produto(produto_id: int, db: Session = Depends(get_db)):
-    produto = RepositorioProduto(db).obter(produto_id)
+@router.get('/produto/{id}')
+def obter_produto(id: int, db: Session = Depends(get_db)):
+    produto = RepositorioProduto(db).obter(id)
+    if not produto:
+        raise HTTPException(status_code=404, detail=(f"Não existe um produto com id = {id}"))
     return produto
