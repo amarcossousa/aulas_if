@@ -25,7 +25,7 @@ app.add_middleware(
 )
 
 
-# Produtos
+# Rotas para produtos
 @app.post('/produtos', status_code=status.HTTP_201_CREATED, response_model=ProdutoSimples)
 def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto)
@@ -52,7 +52,7 @@ def obter_produto(produto_id: int, db: Session = Depends(get_db)):
     produto = RepositorioProduto(db).obter(produto_id)
     return produto
 
-# USUARIOS
+# Rotas para uSUARIOS
 @app.post('/usuarios', status_code=status.HTTP_201_CREATED, response_model=Usuario)
 def criar_usuarios(usuario: Usuario, session: Session = Depends(get_db)):
     usuario_criado = RepositorioUsuario(session).criar(usuario)
