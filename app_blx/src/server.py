@@ -28,9 +28,10 @@ def remover(produto_id: int, db:Session = Depends(get_db)):
     RepositorioProduto(db).remover(produto_id)
     return {'msg': 'Produto excluido com sucesso! '}
 
-@app.put('/produtos/', status_code=status.HTTP_202_ACCEPTED)
-def editar_produto(produto: Produto, session: Session = Depends(get_db)):
-    RepositorioProduto(session).editar(produto)
+@app.put('/produtos/{id}', status_code=status.HTTP_202_ACCEPTED, response_model=ProdutoSimples)
+def editar_produto(id: int, produto: Produto, session: Session = Depends(get_db)):
+    RepositorioProduto(session).editar(id, produto)
+    produto.id = id
     return produto
 
 @app.get('/produto/{produto_id}')

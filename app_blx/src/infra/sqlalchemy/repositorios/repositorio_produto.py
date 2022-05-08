@@ -21,13 +21,13 @@ class RepositorioProduto():
         self.db.refresh(db_produto)
         return db_produto
     
-    def editar(self, produto: schemas.Produto):
+    def editar(self, id: int, produto: schemas.Produto):
         update_stmt = update(models.Produto).where(
-            models.Produto.id == produto.id).values(nome=produto.nome, 
+            models.Produto.id == id).values(nome=produto.nome, 
                                                     detalhes=produto.detalhes,
                                                     preco=produto.preco,
-                                                    disponivel=produto.disponivel,
-                                                    usuario_id=produto.usuario_id)
+                                                    disponivel=produto.disponivel
+                                                    )
         self.db.execute(update_stmt)
         self.db.commit()
 
