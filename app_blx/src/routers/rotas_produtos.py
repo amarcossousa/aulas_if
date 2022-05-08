@@ -1,5 +1,6 @@
+from turtle import st
 from fastapi import APIRouter, Depends, status, HTTPException
-from src.schema.schemas import Produto, ProdutoSimples, Usuario, UsuarioSimples
+from src.schema.schemas import Produto, ProdutoSimples
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.config.database import get_db
 from typing import List
