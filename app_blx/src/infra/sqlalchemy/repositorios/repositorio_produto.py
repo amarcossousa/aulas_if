@@ -9,7 +9,7 @@ class RepositorioProduto():
     def __init__(self, db: Session): # Define a seção no db
         self.db = db
 
-    def criar(self, produto: schemas.Produto): # "Efetiva os modelos no bdb"
+    def criar(self, produto: schemas.Produto): # "Efetiva os modelos no db"
         db_produto = models.Produto(nome=produto.nome, 
                                     detalhes=produto.detalhes,
                                     preco=produto.preco,
@@ -42,7 +42,7 @@ class RepositorioProduto():
 
     def obter(self, produto_id: int):
         stmt = select(models.Produto).filter_by(id = produto_id)
-        produto = self.db.execute(stmt).one()
+        produto = self.db.execute(stmt).scalars().one()
         return produto
 
 
