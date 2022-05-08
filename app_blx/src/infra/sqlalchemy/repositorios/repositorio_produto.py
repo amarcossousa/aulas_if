@@ -32,9 +32,9 @@ class RepositorioProduto():
         self.session.commit()
 
     def remover(self, produto_id: int):
-            stmt = delete(models.Produto).where(models.Produto.id == produto_id)
-            self.session.execute(stmt)
-            self.session.commit()
+        stmt = delete(models.Produto).where(models.Produto.id == produto_id)
+        self.session.execute(stmt)
+        self.session.commit()
     
     def listar(self):
         produtos = self.session.query(models.Produto).all()
@@ -42,7 +42,7 @@ class RepositorioProduto():
 
     def obter(self, produto_id: int):
         stmt = select(models.Produto).filter_by(id = produto_id)
-        produto = self.session.execute(stmt).scalars().one()
+        produto = self.session.execute(stmt).scalars().first()
         return produto
 
 
