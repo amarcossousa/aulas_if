@@ -13,17 +13,17 @@ criar_db()
 app = FastAPI()
 
 # Produtos
-@app.post('/produtos/', status_code=status.HTTP_202_ACCEPTED, response_model=ProdutoSimples)
+@app.post('/produtos/', status_code=status.HTTP_201_CREATED, response_model=ProdutoSimples)
 def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto)
     return produto_criado
 
-@app.get('/produtos/', status_code=201, response_model=List[Produto])
+@app.get('/produtos/', status_code=status.HTTP_202_ACCEPTED, response_model=List[Produto])
 def listar_produtos(db: Session = Depends(get_db)):
     produtos = RepositorioProduto(db).listar()
     return produtos
 
-@app.delete('/produto/, {produto_id}')
+@app.delete('/produto/{produto_id}')
 def remover(produto_id: int, db:Session = Depends(get_db)):
     RepositorioProduto(db).remover(produto_id)
     return {'msg': 'Produto excluido com sucesso! '}
