@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional, List
 
 
@@ -8,6 +8,7 @@ class ProdutoSimples(BaseModel):
     nome: str
     preco: float
     usuario_id: Optional[int]
+    disponivel: bool
    
     class Config:
         orm_mode = True
@@ -18,7 +19,7 @@ class UsuarioSimples(BaseModel):
     nome: str
     telefone: str
     produtos: List[ProdutoSimples] = []
-
+    
     class Config:
         orm_mode = True
 
@@ -28,7 +29,7 @@ class Usuario(BaseModel):
     nome: str
     senha: str
     telefone: str
-
+    
     class Config:
         orm_mode = True
 
@@ -41,6 +42,7 @@ class Produto(BaseModel):
     disponivel: bool = False
     usuario_id: Optional[int]
     usuario: Optional[UsuarioSimples]
+    
 
     class Config:
         orm_mode = True
