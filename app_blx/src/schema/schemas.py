@@ -29,7 +29,7 @@ class Produto(BaseModel):
     detalhes: str
     preco: float
     disponivel: bool = False
-    usuario_id: int
+    usuario_id: Optional[int]
     
     usuario: Optional[UsuarioSimples]
 
