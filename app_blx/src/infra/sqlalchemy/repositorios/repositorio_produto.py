@@ -16,9 +16,9 @@ class RepositorioProduto():
                                     disponivel=produto.disponivel,
                                     usuario_id=produto.usuario_id)
                                     
-        self.db.add(db_produto)
-        self.db.commit()
-        self.db.refresh(db_produto)
+        self.session.add(db_produto)
+        self.session.commit()
+        self.session.refresh(db_produto)
         return db_produto
     
     def editar(self, id: int, produto: schemas.Produto):

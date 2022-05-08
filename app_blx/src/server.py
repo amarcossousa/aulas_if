@@ -13,12 +13,12 @@ criar_db()
 app = FastAPI()
 
 # Produtos
-@app.post('/produtos/', status_code=status.HTTP_201_CREATED, response_model=ProdutoSimples)
+@app.post('/produtos', status_code=status.HTTP_201_CREATED, response_model=ProdutoSimples)
 def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto)
     return produto_criado
 
-@app.get('/produtos/', status_code=status.HTTP_202_ACCEPTED, response_model=List[ProdutoSimples])
+@app.get('/produtos', status_code=status.HTTP_202_ACCEPTED, response_model=List[ProdutoSimples])
 def listar_produtos(db: Session = Depends(get_db)):
     produtos = RepositorioProduto(db).listar()
     return produtos
@@ -40,12 +40,12 @@ def obter_produto(produto_id: int, db: Session = Depends(get_db)):
     return produto
 
 # USUARIOS
-@app.post('/usuarios/', status_code=status.HTTP_201_CREATED, response_model=Usuario)
+@app.post('/usuarios', status_code=status.HTTP_201_CREATED, response_model=Usuario)
 def criar_usuarios(usuario: Usuario, session: Session = Depends(get_db)):
     usuario_criado = RepositorioUsuario(session).criar(usuario)
     return usuario_criado
 
-@app.get('/usuarios/', status_code=202, response_model=List[UsuarioSimples])
+@app.get('/usuarios', status_code=202, response_model=List[UsuarioSimples])
 def listar_usuario(session: Session = Depends(get_db)):
     usuarios = RepositorioUsuario(session).listar()
     return usuarios
