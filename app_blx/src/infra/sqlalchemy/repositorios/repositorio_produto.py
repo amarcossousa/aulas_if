@@ -42,7 +42,7 @@ class RepositorioProduto():
 
     def obter(self, produto_id: int):
         stmt = select(models.Produto).filter_by(id = produto_id)
-        produto = self.session.execute(stmt).scalars().first()
+        produto = self.session.execute(stmt).first()
         return produto
 
 
