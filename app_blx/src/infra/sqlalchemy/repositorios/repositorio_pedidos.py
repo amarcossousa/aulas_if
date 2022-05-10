@@ -20,8 +20,8 @@ class RepositorioPedidos():
         self.session.refresh(session_pedido)
         return session_pedido
 
-    def buscar_pedido_por_id(self, pedido_id: int):
-        stmt = select(models.Pedido).filter_by(id = pedido_id)
+    def buscar_por_id(self, id: int):
+        stmt = select(models.Pedido).where(models.Pedido.id == id)
         pedido = self.session.execute(stmt).first()
         return pedido
         
