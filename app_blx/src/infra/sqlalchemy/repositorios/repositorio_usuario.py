@@ -1,7 +1,8 @@
+from requests import delete
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.models import models
 from src.schema.schemas import Usuario
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
 class RepositorioUsuario():
     
@@ -23,8 +24,13 @@ class RepositorioUsuario():
         usuarios = self.session.execute(stmt).scalars().all()
         return usuarios
 
-    def obter(self):
-        pass
+    def obter_por_telefone(self, telefone):
+        query = select(models.Usuario).where(
+            models.Usuario.telefone == telefone)
+        return self.session.execute(query).scalars().first()
+    
 
-    def remover(self):
-        self
+    def remover(self, usuario_id: int):
+        stmt = delete(models.Usuario).where(models.Usuario.id == usuario_id)
+        self.session.execute(stmt)
+        self.session.commit()

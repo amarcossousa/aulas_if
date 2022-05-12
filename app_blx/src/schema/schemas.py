@@ -14,9 +14,10 @@ class ProdutoSimples(BaseModel):
         orm_mode = True
 
 
-class UsuarioSimples(BaseModel):
+class Usuario(BaseModel):
     id: Optional[int] = None
     nome: str
+    senha: str
     telefone: str
     produtos: List[ProdutoSimples] = []
     
@@ -24,10 +25,9 @@ class UsuarioSimples(BaseModel):
         orm_mode = True
 
 
-class Usuario(BaseModel):
+class UsuarioSimples(BaseModel):
     id: Optional[int] = None
     nome: str
-    senha: str
     telefone: str
     
     class Config:
@@ -55,6 +55,9 @@ class Pedido(BaseModel):
     tipo_entrega: str
     observacao: Optional[str] = 'Descreva o produto aqui'
 
-    usuario_id: Optional[int]
-    produto_id: Optional[int]
+    usuario_id: Optional[UsuarioSimples]
+    produto_id: Optional[ProdutoSimples]
+
+    class Config:
+        orm_mode = True
 
