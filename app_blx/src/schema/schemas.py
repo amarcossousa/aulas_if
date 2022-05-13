@@ -33,7 +33,7 @@ class UsuarioSimples(BaseModel):
     class Config:
         orm_mode = True
 
-# Comentario Qualquer
+
 class Produto(BaseModel):
     id: Optional[int] = None
     nome: str
