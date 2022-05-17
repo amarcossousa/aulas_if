@@ -14,8 +14,7 @@ router = APIRouter()
             response_model=UsuarioSimples)
 def signup(usuario: Usuario, session: Session = Depends(get_db)):
     # Vericar se já existe um usuário para o telefone
-    usuario_localizado = RepositorioUsuario(
-        session).obter_por_telefone(usuario.telefone)
+    usuario_localizado = RepositorioUsuario(session).obter_por_telefone(usuario.telefone)
     if usuario_localizado:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
         detail="Já exite um usuário com esse telefone")
@@ -25,8 +24,8 @@ def signup(usuario: Usuario, session: Session = Depends(get_db)):
     return usuario_criado
 
 
-@router.post('/token', response_description=LoginSucesso)
-def login(login_data: LoginData, session: Session = Depends(get_db)):
+@router.post('/token', response_model=LoginSucesso)
+async def login(login_data: LoginData, session: Session = Depends(get_db)):
     senha = login_data.senha
     telefone = login_data.telefone
 
@@ -35,6 +34,11 @@ def login(login_data: LoginData, session: Session = Depends(get_db)):
     if not usuario:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail='Telefone ou senha estão incorretos!')
+    
+    senha_valida = hash_provider.verificar_hash(senha, usuario.senha)
+    if not senha_valida:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail='Telefone ou senha estão incorretos')
     # Gerar token JWT
 
     token = token_provider.criar_access_token({'sub': usuario.telefone})
